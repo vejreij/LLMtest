@@ -1,3 +1,11 @@
+#Insert library installation here
+import subprocess
+import sys
+
+def install(package):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+install('langchain')
 # Bring in deps
 import os
 from apikey import apikey
