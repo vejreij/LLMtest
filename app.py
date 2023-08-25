@@ -6,6 +6,7 @@ def install(package):
     subprocess.check_call([sys.executable, "-m", "pip", "install", package])
 
 install('langchain')
+install('huggingface_hub')
 # Bring in deps
 import os
 from apikey import apikey
