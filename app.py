@@ -11,7 +11,7 @@ import os
 from apikey import apikey
 
 import streamlit as st
-from langchain.llms import OpenAI
+from langchain.llms import HuggingFacePipeline
 
 os.environ['HUGGINGFACEHUB_API_TOKEN']=apikey
 
@@ -20,7 +20,7 @@ st.title('🦜️🔗 YouTube GPT Creator')
 prompt=st.text_input('Plug in your prompt here')
 
 # Llms
-llm=OpenAI(temperature=0.9 ) #How creative the llm to be
+llm=HuggingFacePipeline(temperature=0.9 ) #How creative the llm to be
 
 #Show stuff to the screen if there is a prompt
 if prompt:
