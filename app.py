@@ -21,7 +21,7 @@ st.title('🦜️🔗 YouTube GPT Creator')
 prompt=st.text_input('Plug in your prompt here')
 
 # Llms
-llm=HuggingFaceHub(repo_id=" google/flan-t5-xxl",model_kwargs={"temperature":0.9}) 
+llm=HuggingFaceHub(repo_id="google/flan-t5-xxl",model_kwargs={"temperature":0.9}) 
 
 #Show stuff to the screen if there is a prompt
 if prompt:
