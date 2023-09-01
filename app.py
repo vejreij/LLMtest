@@ -41,5 +41,5 @@ sequential_chain=SimpleSequentialChain(chains=[title_chain,script_chain],verbose
 
 #Show stuff to the screen if there is a prompt
 if prompt:
-    response=sequential_chain.run(topic=prompt)
+    response=sequential_chain.run(prompt)
     st.write(response) #render back to screen
