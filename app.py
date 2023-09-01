@@ -13,7 +13,7 @@ from apikey import apikey
 
 import streamlit as st
 from langchain.llms import HuggingFaceHub
-from langchain.prompt import PromptTemplate
+from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 
 os.environ['HUGGINGFACEHUB_API_TOKEN']=apikey
