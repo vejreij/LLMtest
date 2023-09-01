@@ -7,6 +7,7 @@ def install(package):
 
 install('langchain')
 install('huggingface_hub')
+install('wikipedia')
 # Bring in deps
 import os
 from apikey import apikey
@@ -52,9 +53,9 @@ wiki=WikipediaAPIWrapper()
 #Show stuff to the screen if there is a prompt
 if prompt:
     #response=sequential_chain({'topic':prompt})
-    title=title_chain(topic=prompt)
+    title=title_chain.run(prompt)
     wiki_research=wiki.run(prompt)
-    script=script_chain(title=title,wikipedia_research=wiki_research)
+    script=script_chain.run(title=title,wikipedia_research=wiki_research)
 
 
     st.write(title) #render back to screen
