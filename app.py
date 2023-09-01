@@ -24,7 +24,7 @@ prompt=st.text_input('Plug in your prompt here')
 
 #Prompt templates
 title_template=PromptTemplate(
-    input_variable=['topic'],
+    input_variables=['topic'],
     template='write me a yoututbe video title about {topic}'
 )
 
