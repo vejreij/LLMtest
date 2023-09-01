@@ -15,6 +15,7 @@ import streamlit as st
 from langchain.llms import HuggingFaceHub
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain, SimpleSequentialChain, SequentialChain
+from langchain.memory import ConversationBufferMemory
 
 os.environ['HUGGINGFACEHUB_API_TOKEN']=apikey
 
@@ -33,10 +34,13 @@ script_template=PromptTemplate(
     template='write me a yoututbe video script based on this title TITLE: {title}'
 )
 
+#Memory
+memory=ConversationBufferMemory(input_key='topic' ,memory_key='chat_history')
+
 # Llms
 llm=HuggingFaceHub(repo_id="google/flan-t5-xxl",model_kwargs={"temperature":0.9,"max_length":1024}) 
-title_chain=LLMChain(llm=llm, prompt=title_template,verbose=True,output_key='title')
-script_chain=LLMChain(llm=llm, prompt=script_template,verbose=True,output_key='script')
+title_chain=LLMChain(llm=llm, prompt=title_template,verbose=True,output_key='title',memory=memory)
+script_chain=LLMChain(llm=llm, prompt=script_template,verbose=True,output_key='script',memory=memory)
 #sequential_chain=SimpleSequentialChain(chains=[title_chain,script_chain],verbose=True)
 sequential_chain=SequentialChain(chains=[title_chain,script_chain],input_variables=['topic'],output_variables=['title','script'],verbose=True)
 
@@ -45,3 +49,6 @@ if prompt:
     response=sequential_chain({'topic':prompt})
     st.write(response['title']) #render back to screen
     st.write(response['script'])
+    
+    with st.expander('Message History'):
+        st.info(memory.buffer)
