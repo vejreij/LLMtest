@@ -14,7 +14,7 @@ from apikey import apikey
 import streamlit as st
 from langchain.llms import HuggingFaceHub
 from langchain.prompts import PromptTemplate
-from langchain.chains import LLMChain, SimpleSequentialChain
+from langchain.chains import LLMChain, SimpleSequentialChain, SequentialChain
 
 os.environ['HUGGINGFACEHUB_API_TOKEN']=apikey
 
@@ -35,11 +35,13 @@ script_template=PromptTemplate(
 
 # Llms
 llm=HuggingFaceHub(repo_id="google/flan-t5-xxl",model_kwargs={"temperature":0.9,"max_length":1024}) 
-title_chain=LLMChain(llm=llm, prompt=title_template,verbose=True)
-script_chain=LLMChain(llm=llm, prompt=script_template,verbose=True)
-sequential_chain=SimpleSequentialChain(chains=[title_chain,script_chain],verbose=True)
+title_chain=LLMChain(llm=llm, prompt=title_template,verbose=True,output_key='title')
+script_chain=LLMChain(llm=llm, prompt=script_template,verbose=True,output_key='script')
+#sequential_chain=SimpleSequentialChain(chains=[title_chain,script_chain],verbose=True)
+sequential_chain=SequentialChain(chains=[title_chain,script_chain],input_variables=['topic'],output_variables=['title','script'],verbose=True)
 
 #Show stuff to the screen if there is a prompt
 if prompt:
-    response=sequential_chain.run(prompt)
-    st.write(response) #render back to screen
+    response=sequential_chain({'topic':prompt})
+    st.write(response['title']) #render back to screen
+    st.write(response['script'])
