@@ -26,4 +26,4 @@ llm=HuggingFaceHub(repo_id="google/flan-t5-xxl",model_kwargs={"temperature":0.9}
 #Show stuff to the screen if there is a prompt
 if prompt:
     response=llm(prompt)
-    st.write(prompt) #render back to screen
+    st.write(response) #render back to screen
